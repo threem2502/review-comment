@@ -16,8 +16,8 @@ function App() {
       <AppHeader/>
       <AppNavbar/>
       <Routes>
-        <Route path="/review-ai" element={<ReviewAIView />} />
-        <Route path="/about-us" element={<AboutUsView />} />
+        <Route path="/review-comment/review-ai" element={<ReviewAIView />} />
+        <Route path="/review-comment/about-us" element={<AboutUsView />} />
       </Routes>
       <AppFooter />
     </BrowserRouter>

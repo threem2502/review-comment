@@ -13,7 +13,7 @@ class AppFooter extends Component {
       <div className="footer-containers">
         <div className="footer-contact">
           <div className="app-logo">
-            <img src="/assets/image/logo.png" alt="logo" />
+            <img src="images/logo.png" alt="logo" />
           </div>
           <div className="footer-contact-right">
             <h3 className="contact-title">Hãy giữ liên lạc nhé</h3>
@@ -27,7 +27,7 @@ class AppFooter extends Component {
         <div className="footer-content">
             <div className="footer-content-col">
               <div className="footer-logo">
-                <img src="/assets/image/logo_white.png"></img>
+                <img src="images/logo_white.png"></img>
               </div>
             </div>
             <div className="social-link">

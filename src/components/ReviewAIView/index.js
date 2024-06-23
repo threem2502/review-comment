@@ -22,14 +22,14 @@ class ReviewAIView extends PureComponent {
         // Render photo thumbnails inside this function
         return (
             <>
-                <a href="/assets/image/image1.png" data-pswp-width="600" data-pswp-height="600" target="_blank" rel="noopener noreferrer">
-                    <img className="thumbnail-img" src="/assets/image/image1.png" alt="Thumbnail 1" />
+                <a href="images/image1.png" data-pswp-width="600" data-pswp-height="600" target="_blank" rel="noopener noreferrer">
+                    <img className="thumbnail-img" src="images/image1.png" alt="Thumbnail 1" />
                 </a>
-                <a href="/assets/image/image2.jpeg" data-pswp-width="600" data-pswp-height="600" target="_blank" rel="noopener noreferrer">
-                    <img className="thumbnail-img" src="/assets/image/image2.jpeg" alt="Thumbnail 2" />
+                <a href="images/image2.jpeg" data-pswp-width="600" data-pswp-height="600" target="_blank" rel="noopener noreferrer">
+                    <img className="thumbnail-img" src="images/image2.jpeg" alt="Thumbnail 2" />
                 </a>
-                <a href="/assets/image/image3.jpeg" data-pswp-width="600" data-pswp-height="600" target="_blank" rel="noopener noreferrer">
-                    <img className="thumbnail-img" src="/assets/image/image3.jpeg" alt="Thumbnail 2" />
+                <a href="images/image3.jpeg" data-pswp-width="600" data-pswp-height="600" target="_blank" rel="noopener noreferrer">
+                    <img className="thumbnail-img" src="images/image3.jpeg" alt="Thumbnail 2" />
                 </a>
             </>
         );
@@ -40,7 +40,7 @@ class ReviewAIView extends PureComponent {
             <div className="review-ai-containers">
                 <div className="image-col">
                     <div className="product-img">
-                        <img className="" src="/assets/image/image1.png" alt="Product Image"/>
+                        <img className="" src="images/image1.png" alt="Product Image"/>
                     </div>
                     <div className="more-product-img" id="gallery-img-product">
                         {this.renderMorePhoto()}

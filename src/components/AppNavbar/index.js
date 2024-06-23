@@ -51,17 +51,17 @@ class AppNavbar extends PureComponent {
             <div className="navbar-containers">
                 <div className={`navbar-item ${activeItem === '1' ? 'active' : ''}`} onClick={() => this.handleClick('1')}>
                     <Dropdown overlay={menu} placement="bottom">
-                        <a href="/product" className="navbar-content">Sản phẩm</a>
+                        <a href="/review-comment/product" className="navbar-content">Sản phẩm</a>
                     </Dropdown>
                 </div>
                 <div className={`navbar-item ${activeItem === '2' ? 'active' : ''}`} onClick={() => this.handleClick('2')}>
-                    <a href="/review-ai" className="navbar-content">Đánh giá (AI)</a>
+                    <a href="/review-comment/review-ai" className="navbar-content">Đánh giá (AI)</a>
                 </div>
                 <div className={`navbar-item ${activeItem === '3' ? 'active' : ''}`} onClick={() => this.handleClick('3')}>
-                    <a href="/guide" className="navbar-content">Hướng dẫn</a>
+                    <a href="/review-comment/guide" className="navbar-content">Hướng dẫn</a>
                 </div>
                 <div className={`navbar-item ${activeItem === '4' ? 'active' : ''}`} onClick={() => this.handleClick('4')}>
-                    <a href="/about-us" className="navbar-content">Về chúng tôi</a>
+                    <a href="/review-comment/about-us" className="navbar-content">Về chúng tôi</a>
                 </div>
             </div>
         );

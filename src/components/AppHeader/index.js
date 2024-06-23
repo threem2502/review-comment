@@ -8,13 +8,13 @@ class AppHeader extends PureComponent {
   }
 
   goHome() {
-    window.location.href= '/'
+    window.location.replace('/review-comment/')
   }
   render() {
     return (
       <div id="header-containers">
         <div className="app-logo" onClick={this.goHome}>
-          <img src="/assets/image/logo.png" alt="logo"/>
+          <img src="images/logo.png" alt="logo"/>
         </div>
         <SearchBar/>
         <div className="user-button">

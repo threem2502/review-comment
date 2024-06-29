@@ -1,0 +1,128 @@
+.product-view-wrapper {
+  width: 100%;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  .product-list-wrapper {
+    width: 90%;
+    min-width: 900px;
+    .product-list-title {
+      font-size: 32px;
+    }
+  
+    .product-list-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden; /* Ensure the container hides overflow */
+      margin-bottom: 10px;
+      .product-list {
+        display: flex;
+        gap: 20px;
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+        width: 100%;
+      }
+  
+      .prev-button,
+      .next-button {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #4007e4;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 1;
+        opacity: 0.8;
+      }
+  
+      .prev-button {
+        left: 0;
+        transform: translateX(50%);
+      }
+  
+      .next-button {
+        right: 0;
+        transform: translateX(-50%);
+      }
+  
+      .prev-button:disabled,
+      .next-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  
+    .product-item-wrapper {  
+      border: 1px solid rgba(128, 128, 128, 0.427);
+      box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.10);
+      width: 300px;
+      padding: 10px 20px;
+      text-align: center;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: #cccccc5b;
+      }
+      .product-img {
+        width: 250px;
+        height: 250px;
+      }
+  
+      .product-item-point {
+        text-align: left;
+        display: block;
+        line-height: 1.5;
+        color: #4007E4;
+        font-size: 24px;
+        font-weight: bold;
+      }
+  
+      .product-rating {
+        text-align: left;
+  
+        .product-count-review {
+          font-size: 12px;
+          margin-left: 10px;
+          color: #4007E4;
+        }
+      }
+  
+      .product-item-brand {
+        text-align: left;
+        display: block;
+        color: #213871;
+        font-size: 12px;
+        line-height: 1.5;
+        margin-top: 5px;
+      }
+    
+      .product-item-name {
+        text-align: left;
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 5px;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+  
+}
+
+
+.bar {
+  cursor: pointer;
+  width: 90%;
+  height: 400px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import AppHeader from './components/AppHeader';
@@ -10,20 +10,41 @@ import {
   HashRouter as Router,
   Route,
   Routes,
+  useLocation,
+  useNavigate,
 } from 'react-router-dom';
 import ProductView from './components/ProductView';
-
-function App() {
+import AccountForm from './components/AccountForm';
+import { auth } from './firebase';
+function Layout() {
+  const location = useLocation();
+  const isLoginPage = location.pathname == '/login';
+  const navigate = useNavigate();
+  const [accountFormType, setAccountFormType] = useState('')
   return (
-    <Router>
-      <AppHeader/>
-      <AppNavbar/>
+    <>
+      {!isLoginPage && <AppHeader navigate={navigate} setAccountFormType={setAccountFormType} />}
+      {!isLoginPage && <AppNavbar />}
       <Routes>
         <Route exact path='/' element={<ProductView />} />
         <Route path="/review-ai" element={<ReviewAIView />} />
         <Route path="/about-us" element={<AboutUsView />} />
+        <Route path="/login" element={<AccountForm 
+          accountFormType={accountFormType} 
+          setAccountFormType={setAccountFormType}
+          auth={auth}
+          navigate={navigate}
+          />} /> {/* Add this route */}
       </Routes>
-      <AppFooter />
+      {!isLoginPage && <AppFooter />}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Layout />
     </Router>
   );
 }

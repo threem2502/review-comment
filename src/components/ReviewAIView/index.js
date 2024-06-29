@@ -1,63 +1,29 @@
-import { PureComponent } from "react";
+import { Component } from "react";
 import "./index.scss";
 import { Button, Rate, Input } from "antd";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
-class ReviewAIView extends PureComponent {
+import Lightbox from "../Lightbox";
+class ReviewAIView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputUrl: "",
       reviews: null,
       product: null,
+      buyUrl: "",
     };
   }
-  componentDidMount() {
-    this.lightbox = new PhotoSwipeLightbox({
-      gallery: "#gallery-img-product",
-      children: "a",
-      pswpModule: () => import("photoswipe"),
-    });
-    this.lightbox.init();
-  }
-  componentWillUnmount() {
-    if (this.lightbox) {
-      this.lightbox.destroy();
-    }
-  }
-  renderMorePhoto() {
-    const { product } = this.state
-    return (
-      <>
-      {product.images.map((image, index) => (
-        <a
-          key={index}
-          href={image.base_url}
-          data-pswp-width="600"
-          data-pswp-height="600"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img
-            className="thumbnail-img"
-            src={image.thumbnail_url}
-            alt={`Thumbnail ${index + 1}`}
-          />
-        </a>
-      ))}
-    </>
-    );
-  }
+  
 
   handleInputChange(e) {
-    this.setState({ inputUrl: e.target.value });
+    this.setState({ inputUrl: e.target.value, buyUrl: e.target.value });
   }
   handleClickReview = async () => {
     const { inputUrl } = this.state;
     const apiUrl = this.getReviewAPIUrl(inputUrl);
     const productApiUrl = this.getProductAPIUrl(inputUrl);
-    
-    if (apiUrl && productApiUrl) {
+    if (apiUrl, productApiUrl) {
       try {
         const [reviewsResponse, productResponse] = await Promise.all([
           fetch(apiUrl),
@@ -67,7 +33,7 @@ class ReviewAIView extends PureComponent {
         const reviewsData = await reviewsResponse.json();
         const productData = await productResponse.json();
 
-        this.setState({ reviews: reviewsData, product: productData });
+        this.setState({ reviews: reviewsData, product: productData, inputUrl: "" });
       } catch (error) {
         console.error("Có lỗi xảy ra khi gọi API:", error);
       }
@@ -95,6 +61,11 @@ getProductAPIUrl(inputUrl) {
   }
 }
 
+  handleBuyProduct() {
+    const { buyUrl } = this.state
+    window.open(buyUrl, '_blank');
+  }
+
   getReviewAPIUrl(inputUrl) {
     try {
       const url = new URL(inputUrl);
@@ -102,13 +73,12 @@ getProductAPIUrl(inputUrl) {
       const spid = searchParams.get("spid");
       const productIdMatch = url.pathname.match(/-p(\d+)\.html/);
       const product_id = productIdMatch ? productIdMatch[1] : null;
-      const seller_id = 1;
 
       if (!spid || !product_id) {
         throw new Error("URL không chứa đủ thông tin cần thiết.");
       }
 
-      const apiUrl = `https://tiki.vn/api/v2/reviews?limit=5&include=comments,contribute_info,attribute_vote_summary&sort=score%7Cdesc,id%7Cdesc,stars%7Call&page=1&spid=${spid}&product_id=${product_id}&seller_id=${seller_id}`;
+      const apiUrl = `https://tiki.vn/api/v2/reviews?limit=20&include=comments,contribute_info,attribute_vote_summary&sort=score%7Cdesc,id%7Cdesc,stars%7Call&page=1&spid=${spid}&product_id=${product_id}`;
 
       return apiUrl;
     } catch (error) {
@@ -137,6 +107,8 @@ getProductAPIUrl(inputUrl) {
 
   renderInfo() {
     const { reviews, product } = this.state
+
+    const recommentText = reviews.rating_average > 4.5 ? "Rất tốt, đáng để mua" : reviews.rating_average >= 4 ?  "Chất lượng khá, có thể mua" : "Sản phẩm tệ, không nên mua"
     return (
       <div className="review-info">
         <div className="image-col">
@@ -144,7 +116,7 @@ getProductAPIUrl(inputUrl) {
             <img className="" src={product.thumbnail_url} alt="Product Image" />
           </div>
           <div className="more-product-img" id="gallery-img-product">
-            {this.renderMorePhoto()}
+            <Lightbox content={product.images} />
           </div>
         </div>
         <div className="review-col">
@@ -155,12 +127,12 @@ getProductAPIUrl(inputUrl) {
             allowHalf
             defaultValue={reviews.rating_average}
           />
-          <span className="ai-review">Rất tốt, đáng mua</span>
-          <Button className="buy-btn">Mua hàng</Button>
+          <span className="ai-review">{recommentText}</span>
+          <Button className="buy-btn" onClick={this.handleBuyProduct.bind(this)}>Mua hàng</Button>
         </div>
         <div className="info-col">
           <span className="product-name">{product.name}</span>
-          <span className="product-brand">{product.brand.name || product.authors.name}</span>
+          <span className="product-brand">{product.brand?.name || product.authors.name}</span>
           <span className="product-type">{product.categories.name}</span>
           <span className="product-price">{product.price} đồng</span>
           <div className="product-describe">

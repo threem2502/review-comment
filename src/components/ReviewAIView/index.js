@@ -23,22 +23,38 @@ class ReviewAIView extends Component {
     const { inputUrl } = this.state;
     const apiUrl = this.getReviewAPIUrl(inputUrl);
     const productApiUrl = this.getProductAPIUrl(inputUrl);
-    if (apiUrl, productApiUrl) {
-      try {
-        const [reviewsResponse, productResponse] = await Promise.all([
-          fetch(apiUrl),
-          fetch(productApiUrl),
-        ]);
+    if (apiUrl && productApiUrl) {
+        try {
+            const [reviewsResponse, productResponse] = await Promise.all([
+                fetch(apiUrl),
+                fetch(productApiUrl),
+            ]);
 
-        const reviewsData = await reviewsResponse.json();
-        const productData = await productResponse.json();
+            const reviewsData = await reviewsResponse.json();
+            const productData = await productResponse.json();
+            this.setState({ reviews: reviewsData, product: productData, inputUrl: "" });
+            // Save product data to FastAPI backend
+            await fetch("http://localhost:8000/products/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  image: productData.thumbnail_url,
+                  rating_average: reviewsData.rating_average,
+                  reviews_count: reviewsData.reviews_count,
+                  brand: productData.brand?.name || productData.authors.name,
+                  product_name: productData.name
+                })
+            });
 
-        this.setState({ reviews: reviewsData, product: productData, inputUrl: "" });
-      } catch (error) {
-        console.error("Có lỗi xảy ra khi gọi API:", error);
-      }
+            
+        } catch (error) {
+            console.error("Có lỗi xảy ra khi gọi API:", error);
+        }
     }
 };
+
 
 getProductAPIUrl(inputUrl) {
   try {

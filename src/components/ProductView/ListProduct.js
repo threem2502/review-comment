@@ -29,8 +29,22 @@ class ListProduct extends Component {
     this.setState({ scrollLeft: this.productListRef.current.scrollLeft });
   };
 
+  renderListProduct() {
+    const { products } = this.props
+
+    return products.map(product => {
+      return <ListProductItem
+        imgSrc={product.image}
+        ratingAverage={product.rating_average}
+        reviewCount={product.reviews_count}
+        brand={product.brand}
+        productName={product.product_name}
+      />
+    })
+  }
+
   render() {
-    const { listTitle } = this.props;
+    const { listTitle, products } = this.props;
     const { scrollLeft } = this.state;
     const maxScrollLeft =
       this.productListRef.current &&
@@ -49,12 +63,7 @@ class ListProduct extends Component {
             <CaretLeft size={32} weight="duotone" />
           </button>
           <div className='product-list' ref={this.productListRef}>
-            <ListProductItem />
-            <ListProductItem />
-            <ListProductItem />
-            <ListProductItem />
-            <ListProductItem />
-            <ListProductItem />
+            
             {/* Add more ListProductItem as needed */}
           </div>
           <button

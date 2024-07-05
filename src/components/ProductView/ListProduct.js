@@ -64,7 +64,7 @@ class ListProduct extends Component {
           </button>
           <div className='product-list' ref={this.productListRef}>
             
-            {/* Add more ListProductItem as needed */}
+            {this.renderListProduct()}
           </div>
           <button
             className='next-button'

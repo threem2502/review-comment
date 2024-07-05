@@ -73,7 +73,17 @@
           font-weight: bold;
       }
 
-      
+      .result-good{
+        color: green !important;
+      }
+      .result-normal {
+      }
+      .result-bad {
+          color: red !important;
+      }
+      .result-text {
+        font-weight: bold;
+      }
     }
   
   

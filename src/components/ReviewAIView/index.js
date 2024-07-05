@@ -1,6 +1,6 @@
 import { Component } from "react";
 import "./index.scss";
-import { Button, Rate, Input } from "antd";
+import { Button, Rate, Input, Spin } from "antd";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
 import Lightbox from "../Lightbox";
@@ -12,6 +12,7 @@ class ReviewAIView extends Component {
       reviews: null,
       product: null,
       buyUrl: "",
+      detectProduct: null,
     };
   }
   
@@ -43,12 +44,21 @@ class ReviewAIView extends Component {
                   image: productData.thumbnail_url,
                   rating_average: reviewsData.rating_average,
                   reviews_count: reviewsData.reviews_count,
-                  brand: productData.brand?.name || productData.authors.name,
+                  brand: productData.brand?.name || productData.authors.name || "Không có thương hiệu",
                   product_name: productData.name
                 })
             });
+            const detectProductResponse = await fetch("http://localhost:8000/detect_product/", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({list_text: this.state.reviews.data.map(review => review.content )})
+          });
 
-            
+          const detectProductData = await detectProductResponse.json();
+          console.log("Detect Product Response:", detectProductData);
+          this.setState({detectProduct: detectProductData})
         } catch (error) {
             console.error("Có lỗi xảy ra khi gọi API:", error);
         }
@@ -122,7 +132,7 @@ getProductAPIUrl(inputUrl) {
   }
 
   renderInfo() {
-    const { reviews, product } = this.state
+    const { reviews, product, detectProduct } = this.state
 
     const recommentText = reviews.rating_average > 4.5 ? "Rất tốt, đáng để mua" : reviews.rating_average >= 4 ?  "Chất lượng khá, có thể mua" : "Sản phẩm tệ, không nên mua"
     return (
@@ -136,6 +146,13 @@ getProductAPIUrl(inputUrl) {
           </div>
         </div>
         <div className="review-col">
+          {detectProduct && 
+          <>
+            <span className="result-good result-txt">Số đánh giá tốt: {detectProduct.Tốt}</span>
+            <span className="result-normal result-txt">Số đánh giá bình thường: {detectProduct["Bình thường"]}</span>
+            <span className="result-bad result-txt" >Số đánh giá tệ: {detectProduct.Tệ}</span>
+          </>
+          }
           <span className="point-review">{reviews.rating_average}</span>
           <Rate
             style={{ color: "#4007E4" }}

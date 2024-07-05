@@ -16,6 +16,7 @@ import {
 import ProductView from './components/ProductView';
 import AccountForm from './components/AccountForm';
 import { auth } from './firebase';
+import DetectReview from './components/DetectReview';
 function Layout() {
   const location = useLocation();
   const isLoginPage = location.pathname == '/login';
@@ -29,6 +30,7 @@ function Layout() {
         <Route exact path='/' element={<ProductView />} />
         <Route path="/review-ai" element={<ReviewAIView />} />
         <Route path="/about-us" element={<AboutUsView />} />
+        <Route path='/detect-review' element={<DetectReview />} />
         <Route path="/login" element={<AccountForm 
           accountFormType={accountFormType} 
           setAccountFormType={setAccountFormType}

@@ -20,7 +20,7 @@ class ListProductItem extends Component {
             allowHalf
             defaultValue={ratingAverage}
           />
-          <span className="product-count-review">{reviewCount}</span>
+          <span className="product-count-review">{reviewCount} đánh giá</span>
         </div>
         <span className="product-item-brand">{brand}</span>
         <span className="product-item-name">{productName}</span>

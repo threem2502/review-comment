@@ -22,12 +22,13 @@ class ProductView extends Component {
       // Gọi API để lấy danh sách sản phẩm
       const hotProductsResponse = await axios.get("http://localhost:8000/products/");
       const newProductsResponse = await axios.get("http://localhost:8000/products/"); // Nếu có endpoint riêng cho sản phẩm mới
-
+      console.log(hotProductsResponse);
       // Cập nhật state với dữ liệu lấy được từ API
       this.setState({
         hotProducts: hotProductsResponse.data,
-        newProducts: newProductsResponse.data
+        newProducts: newProductsResponse.data.reverse()
       });
+      
     } catch (error) {
       console.error("Error fetching products:", error);
       // Xử lý lỗi nếu cần thiết
